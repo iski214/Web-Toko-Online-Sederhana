@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Keranjang Belanja</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const map = L.map('dynamic-map').setView([0, 0], 13); 
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+    }).addTo(map);
+
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const lat = position.coords.latitude;
+          const lon = position.coords.longitude;
+
+          map.setView([lat, lon], 15);
+
+          L.marker([lat, lon])
+            .addTo(map)
+            .bindPopup("Lokasi kamu di sini.")
+            .openPopup();
+        },
+        () => {
+          alert("Tidak dapat mengakses lokasi. Aktifkan GPS-mu.");
+        }
+      );
+    } else {
+      alert("Browser tidak mendukung geolokasi.");
+    }
+  });
+</script>
+
+<body>
+  <header>
+    <div class="header-container">
+      <h1>Keranjang</h1>
+      <a href="index.html" class="btn-cart">⬅️ Kembali Belanja</a>
+    </div>
+  </header>
+
+  <main>
+    <section id="cart-section">
+      <div id="cart-items"></div>
+      <p id="cart-total"></p>
+
+      <div class="form-section">
+        <h3>Metode Pembayaran</h3>
+        <select id="payment-method">
+          <option value="Transfer Bank">Transfer Bank</option>
+          <option value="COD">Bayar di Tempat (COD)</option>
+          <option value="QRIS">QRIS</option>
+        </select>
+
+        <h3>Jenis Pengiriman</h3>
+        <select id="shipping-method">
+          <option value="Reguler">Reguler (3-5 hari)</option>
+          <option value="Kilat">Kilat (1-2 hari)</option>
+          <option value="Same Day">Same Day (hari ini)</option>
+        </select>
+
+        <h3>Konfirmasi Lokasi Pengiriman</h3>
+        <div class="map-container">
+          <div id="dynamic-map" style="height: 300px; border-radius: 8px;"></div>
+        </div>
+
+        <button id="checkout-button">Checkout</button>
+        <button id="tambah-button" onclick="window.location.href='index.html'" class="btn-secondary">➕ Tambah Barang Lain</button>
+      </div>
+    </section>
+  </main>
+
+  <script src="js/cart.js"></script>
+</body>
+</html>
