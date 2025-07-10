@@ -24,7 +24,8 @@ A simple online store website built using HTML, CSS, and JavaScript without any 
 - Click "Checkout" to simulate a successful purchase.
   
 ## 🔧 Folder Structure
-``` 📁 Web-Toko-Online-Sederhana/
+```
+📁 Web-Toko-Online-Sederhana/
 ├── index.html
 ├── cart.html
 ├── README.md
